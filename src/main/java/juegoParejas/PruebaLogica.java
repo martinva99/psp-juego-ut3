@@ -1,6 +1,5 @@
 package juegoParejas;
 
-import java.sql.SQLOutput;
 import java.text.Normalizer;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -37,44 +36,45 @@ public class PruebaLogica {
         }
         for (int i = 0; i < 10; i++) { // meter la lista de palabras pregunta-respuesta al HashMap (clave del HashMap es un número, valor del HashMap es una lista de dos Strings: pregunta-respuesta
             List<String> preguntasTemporal = new ArrayList<>(); // Lista temporal para meter las pregunta-respuesta al hashmap
-            preguntasTemporal.add(preguntas.get(i*2));
-            preguntasTemporal.add(preguntas.get(i*2 + 1));
+            preguntasTemporal.add(preguntas.get(i * 2));
+            preguntasTemporal.add(preguntas.get(i * 2 + 1));
             preguntasRespuestas.put(i, preguntasTemporal);
         }
 
         //Simulación de cómo funcionaría el programa, sin tener en cuenta servidor ni cliente
         System.out.println("WORDMATCH LISTO");
-        List<String> opciones = new ArrayList<>(); // Lista para meter opciones cada vez que se juega
+
         Random rand = new Random(); // Para aleatorizar los números
         int opcionesRandom; // número aleatorio para meter en la lista de opciones
-        int palabrasRandom = rand.nextInt(palabrasIncorrectas.size() - 1); // número aleatorio para meter palabras incorrectas
-        StringBuilder sb = new StringBuilder();
-        String respuesta = sc.nextLine();
+        int palabrasRandom; // número aleatorio para meter palabras incorrectas
+        String respuesta;
 
-        while (!respuesta.equalsIgnoreCase("SALIR")) {
-
-            for (int i = 0; i < preguntasRespuestas.size(); i++) {
-
-                if (respuesta.equalsIgnoreCase("NUEVA")) {
-                    opciones.add(preguntasRespuestas.get(i).get(1)); // meter en la lista opciones la respuesta correcta
+        for (int i = 0; i < preguntasRespuestas.size(); i++) {
+            StringBuilder sb = new StringBuilder();
+            List<String> opciones = new ArrayList<>(); // Lista para meter opciones cada vez que se juega
+            System.out.println("Escriba 'NUEVA' para  recibir una nueva pregunta, " +
+                    "o escriba 'SALIR' para dejar de jugar");
+            respuesta = sc.nextLine();
+            if (respuesta.equalsIgnoreCase("NUEVA")) {
+                opciones.add(preguntasRespuestas.get(i).get(1)); // meter en la lista opciones la respuesta correcta
+                for (int j = 0; j < 2; j++) {
+                    palabrasRandom = rand.nextInt(palabrasIncorrectas.size());
                     opciones.add(palabrasIncorrectas.get(palabrasRandom)); // meter en la lista opciones una respuesta incorrecta
-                    opciones.add(palabrasIncorrectas.get(palabrasRandom)); // meter en la lista opciones otra respuesta incorrecta
+                }
 
-                    sb.append("PREGUNTA " + preguntasRespuestas.get(i).get(0) + " OPCIONES "); // PREGUNTA (palabra pregunta) OPCIONES
+                sb.append("PREGUNTA: " + preguntasRespuestas.get(i).get(0) + " || OPCIONES: "); // PREGUNTA (palabra pregunta) OPCIONES
 
-                    for (int j = 0; j < 3; j++) { // bucle para aleatorizar el orden en el que sacamos las opciones
-                        opcionesRandom = rand.nextInt(opciones.size());
-                        sb.append(opciones.get(opcionesRandom) + " ");
-                        opciones.remove(opcionesRandom);
-                    }
-
+                for (int j = 0; j < 3; j++) { // bucle para aleatorizar el orden en el que sacamos las opciones
+                    opcionesRandom = rand.nextInt(opciones.size());
+                    sb.append(opciones.get(opcionesRandom) + " ");
+                    opciones.remove(opcionesRandom);
                 }
                 System.out.println(sb.toString().trim()); // lo sacamos por pantalla y trimeamos para quitar el último espacio
                 String respuesta2;
 
                 do {
                     respuesta2 = sc.nextLine();
-                    if (quitarTildes(respuesta2).equalsIgnoreCase("RESPUESTA " + preguntasRespuestas.get(i).get(1))) { // si responde la respuesta correcta
+                    if (quitarTildes(respuesta2).equalsIgnoreCase(preguntasRespuestas.get(i).get(1))) { // si responde la respuesta correcta
                         System.out.println("OK");
                     } else if (respuesta2.equalsIgnoreCase("PISTA")) {
                         System.out.println("PISTA " + pistas.get(i));
@@ -84,9 +84,16 @@ public class PruebaLogica {
                 }
                 while (respuesta2.equalsIgnoreCase("PISTA"));
 
+            } else if (respuesta.equalsIgnoreCase("SALIR")) {
+                i = preguntasRespuestas.size();
+            } else {
+                System.out.println("Respuesta no válida");
+                i--;
+            }
+            if(i >= preguntasRespuestas.size() - 1){
+                System.out.println("Gracias por jugar");
             }
         }
-
 
     }
 
