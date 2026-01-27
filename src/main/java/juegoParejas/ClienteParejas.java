@@ -15,15 +15,16 @@ public class ClienteParejas {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              Scanner sc = new Scanner(System.in)) {
 
-            System.out.println("// ------------ INICIANDO WORDMATCH ------------ //");
+            System.out.println("// ------------ INICIANDO WORDMATCH ------------ //\n");
 
             // COMPROBACIÓN DEL SERVIDOR - ESPERA RESPUESTA INICIAL //
             String mensajeServidor = in.readLine();
+            System.out.println("[SERVER] OPCIONES DISPONIBLES\n " + opcionesMenu() );
             System.out.println("[SERVER] " + mensajeServidor );
 
             // COMUNICACIÓN CONTROLADA //
             while(conectado) {
-                System.out.println("> ");
+                System.out.print("> ");
                 String comando = sc.nextLine().trim();
 
                 // EVITAR LÍNEAS EN BLANCO
@@ -42,7 +43,7 @@ public class ClienteParejas {
                     System.out.println("SERVIDOR CERRO LA CONEXIÓN");
                     conectado = false;
                 } else {
-                    System.out.println("[SERVER] : " + respuesta);
+                    System.out.println("[SERVER] - " + respuesta);
                 }
 
                 // USUARIO QUIERE SALIR //
@@ -58,6 +59,14 @@ public class ClienteParejas {
         }
 
         System.out.println("// -------------- Cliente desconectado -------------- // ");
+    }
+
+    private static String opcionesMenu() {
+        return
+                "  NUEVA - Para empezar a jugar al WordMatch\n" +
+                        "   RESPUESTA X - Para indicar la respuesta de la pregunta (RESPUESTA MADERA)\n" +
+                        "   PISTA - Genera una pista si no estas seguro/a de la respuesta\n" +
+                        "   SALIR - Si quieres dejar de jugar\n\n";
     }
 
 }
