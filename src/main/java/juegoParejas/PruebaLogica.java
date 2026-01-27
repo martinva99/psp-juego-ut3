@@ -16,7 +16,7 @@ public class PruebaLogica {
         pistas.put(1, "Mueble común que suele estar fabricado con este material");
         pistas.put(2, "Ejemplo de un mamífero doméstico muy leal");
         pistas.put(3, "Actividad física que se juega golpeando una pelota con raqueta");
-        pistas.put(4, "El tono que representa la luz de esta categoría");
+        pistas.put(4, "El color de PAC-MAN");
         pistas.put(5, "Una composición sonora que se puede cantar");
         pistas.put(6, "Gran masa de este líquido que cubre el planeta");
         pistas.put(7, "Un ejemplo de alimento dulce, rojo y con semillas");

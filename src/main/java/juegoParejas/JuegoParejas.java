@@ -23,6 +23,26 @@ public class JuegoParejas {
         this.palabrasIncorrectas = palabrasIncorrectas;
     }
 
+    public int getPreguntaActual() {
+        return preguntaActual;
+    }
+
+    public void setPreguntaActual(int preguntaActual) {
+        this.preguntaActual = preguntaActual;
+    }
+
+    public List<String> getOpciones() {
+        return opciones;
+    }
+
+    public Map<Integer, String> getPistas() {
+        return pistas;
+    }
+
+    public Map<Integer, List<String>> getPreguntasRespuestas() {
+        return preguntasRespuestas;
+    }
+
     public String nuevaPregunta() {
         preguntaActual++;
         if (preguntaActual >= preguntasRespuestas.size()) {
