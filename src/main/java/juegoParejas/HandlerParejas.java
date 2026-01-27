@@ -20,7 +20,6 @@ class HandlerParejas implements Runnable {
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
             out.println("WORDMATCH LISTO");
-            // out.println(opcionesMenu());
 
             String linea;
             while ((linea = in.readLine()) != null) {

@@ -19,16 +19,16 @@ public class ClienteParejas {
 
             // COMPROBACIÓN DEL SERVIDOR - ESPERA RESPUESTA INICIAL //
             String mensajeServidor = in.readLine();
-            System.out.println("[SERVER] OPCIONES DISPONIBLES\n " + opcionesMenu() );
-            System.out.println("[SERVER] " + mensajeServidor );
+            System.out.println("[SERVER] OPCIONES DISPONIBLES\n " + opcionesMenu());
+            System.out.println("[SERVER] " + mensajeServidor);
 
             // COMUNICACIÓN CONTROLADA //
-            while(conectado) {
+            while (conectado) {
                 System.out.print("> ");
                 String comando = sc.nextLine().trim();
 
                 // EVITAR LÍNEAS EN BLANCO
-                if(comando.isEmpty()) {
+                if (comando.isEmpty()) {
                     continue;
                 }
 
@@ -46,8 +46,8 @@ public class ClienteParejas {
                     System.out.println("[SERVER] - " + respuesta);
                 }
 
-                // USUARIO QUIERE SALIR //
-                if(comando.equalsIgnoreCase("SALIR")) {
+                // USUARIO QUIERE SALIR
+                if (comando.equalsIgnoreCase("SALIR")) {
                     conectado = false;
                 }
             }
@@ -63,9 +63,9 @@ public class ClienteParejas {
 
     private static String opcionesMenu() {
         return
-                "  NUEVA - Para empezar a jugar al WordMatch\n" +
-                        "   RESPUESTA X - Para indicar la respuesta de la pregunta (RESPUESTA MADERA)\n" +
-                        "   PISTA - Genera una pista si no estas seguro/a de la respuesta\n" +
+                "  NUEVA - Para empezar a jugar al WordMatch y mostrar una nueva pregunta\n" +
+                        "   RESPUESTA X - Para indicar la respuesta de la pregunta (formato ejemplo: RESPUESTA MADERA)\n" +
+                        "   PISTA - Muestra una pista si no estas seguro/a de la respuesta\n" +
                         "   SALIR - Si quieres dejar de jugar\n\n";
     }
 

@@ -27,22 +27,6 @@ public class JuegoParejas {
         return preguntaActual;
     }
 
-    public void setPreguntaActual(int preguntaActual) {
-        this.preguntaActual = preguntaActual;
-    }
-
-    public List<String> getOpciones() {
-        return opciones;
-    }
-
-    public Map<Integer, String> getPistas() {
-        return pistas;
-    }
-
-    public Map<Integer, List<String>> getPreguntasRespuestas() {
-        return preguntasRespuestas;
-    }
-
     public String nuevaPregunta() {
         preguntaActual++;
         if (preguntaActual >= preguntasRespuestas.size()) {
@@ -76,7 +60,11 @@ public class JuegoParejas {
     }
 
     public String pedirPista() {
-        return "PISTA: " + pistas.get(preguntaActual);
+        if(getPreguntaActual() == -1) {
+            return "NO SE PUEDE PEDIR PISTA ANTES DE LA PRIMERA PREGUNTA";
+        } else {
+            return "PISTA: " + pistas.get(preguntaActual);
+        }
     }
 
     private String getPreguntaConOpciones() {

@@ -1,4 +1,5 @@
 package juegoParejas;
+
 import java.io.*;
 import java.net.*;
 
@@ -13,15 +14,15 @@ public class ServidorParejas {
             activo = false;
         }));
 
-        try(ServerSocket srv = new ServerSocket(PUERTO)){
+        try (ServerSocket srv = new ServerSocket(PUERTO)) {
             srv.setSoTimeout(2000);
             System.out.println("--- Inicializando servidor juego parejas (Multihilo) ---");
             System.out.println("Prueba a conectar varios clientes a la vez.");
-            while(activo){
-                try{
+            while (activo) {
+                try {
                     //2.Aceptar Cliente
                     Socket cliente = srv.accept();
-                    System.out.println("Nuevo cliente conectado: "+cliente.getInetAddress());
+                    System.out.println("Nuevo cliente conectado: " + cliente.getInetAddress());
                     //3.Delegar
                     new Thread(new HandlerParejas(cliente)).start();
                 } catch (IOException e) {
@@ -29,7 +30,7 @@ public class ServidorParejas {
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error en el servidor: "+ e.getMessage());
+            System.err.println("Error en el servidor: " + e.getMessage());
         }
         System.out.println("Servidor detenido y puerto liberado.");
 

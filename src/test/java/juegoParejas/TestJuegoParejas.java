@@ -3,8 +3,6 @@ package juegoParejas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestJuegoParejas {
@@ -29,46 +27,42 @@ public class TestJuegoParejas {
     void testNuevaPreguntaPrimeraPregunta() {
         String resultado = juego.nuevaPregunta();
 
-        assertEquals(0, juego.getPreguntaActual(), "La primera pregunta debe ser la del índice 0");
-        assertEquals(List.of("SOL", "DIA"), juego.getPreguntasRespuestas().get(0),
-                "La primera pregunta debe ser la del índice 0");
         assertTrue(resultado.startsWith("PREGUNTA: SOL || OPCIONES: "),
                 "La primera pregunta debe empezar por 'PREGUNTA: SOL || OPCIONES: '");
-        assertTrue(juego.getOpciones().contains(juego.getPreguntasRespuestas().get(0).get(1)),
+        assertTrue(resultado.contains("DIA"),
                 "La primera pregunta debe contener 'DIA' entre las opciones");
     }
 
     @Test
     void testNuevaPreguntaSegundaPregunta() {
-        juego.setPreguntaActual(0);
+        juego.nuevaPregunta(); // Simula la primera pregunta
         String resultado = juego.nuevaPregunta();
 
-        assertEquals(1, juego.getPreguntaActual(), "La segunda pregunta debe ser la del índice 1");
-        assertEquals(List.of("MADERA", "MESA"), juego.getPreguntasRespuestas().get(1),
-                "La segunda pregunta debe ser la del índice 1");
         assertTrue(resultado.startsWith("PREGUNTA: MADERA || OPCIONES: "),
                 "La segunda pregunta debe empezar por 'PREGUNTA: MADERA || OPCIONES: '");
-        assertTrue(juego.getOpciones().contains(juego.getPreguntasRespuestas().get(1).get(1)),
+        assertTrue(resultado.contains("MESA"),
                 "La segunda pregunta debe contener 'MESA' entre las opciones");
     }
 
     @Test
     void testNuevaPreguntaUltimaPregunta() {
-        juego.setPreguntaActual(8);
+        for (int i = 0; i < 9; i++) { // Simula el resto de preguntas
+            juego.nuevaPregunta();
+        }
         String resultado = juego.nuevaPregunta();
 
-        assertEquals(9, juego.getPreguntaActual(), "La última pregunta debe ser la del índice 9");
-        assertEquals(List.of("PISTOLA", "BALA"), juego.getPreguntasRespuestas().get(9),
-                "La última pregunta debe ser la del índice 9");
+
         assertTrue(resultado.startsWith("PREGUNTA: PISTOLA || OPCIONES: "),
                 "La última pregunta debe empezar por 'PREGUNTA: PISTOLA || OPCIONES: '");
-        assertTrue(juego.getOpciones().contains(juego.getPreguntasRespuestas().get(9).get(1)),
+        assertTrue(resultado.contains("BALA"),
                 "La última pregunta debe contener 'BALA' entre las opciones");
     }
 
     @Test
     void testNuevaPreguntaFinJuego() {
-        juego.setPreguntaActual(9);
+        for (int i = 0; i < 10; i++) { // Simula todas las preguntas
+            juego.nuevaPregunta();
+        }
         String resultado = juego.nuevaPregunta();
 
         assertEquals("FIN",  resultado);
@@ -76,25 +70,34 @@ public class TestJuegoParejas {
 
     @Test
     void testPedirPistaPrimeraPregunta() {
-        juego.setPreguntaActual(0);
+        juego.nuevaPregunta();
         String resultado = juego.pedirPista();
 
-        assertEquals("PISTA: " + juego.getPistas().get(0), resultado,
+        assertTrue(resultado.startsWith("PISTA: El periodo de tiempo"),
                 "La pista debe ser la de la primera pregunta");
     }
 
     @Test
     void testPedirPistaSegundaPregunta() {
-        juego.setPreguntaActual(1);
+        juego.nuevaPregunta();
+        juego.nuevaPregunta();
         String resultado = juego.pedirPista();
 
-        assertEquals("PISTA: " + juego.getPistas().get(1), resultado,
+        assertTrue(resultado.startsWith("PISTA: Mueble común"),
                 "La pista debe ser la de la segunda pregunta");
     }
 
     @Test
+    void testPedirPistaPronto() {
+        String resultado = juego.pedirPista();
+
+        assertTrue(resultado.startsWith("NO SE PUEDE PEDIR"),
+                "Problema con la respuesta al pedir pista cuando todavía no se debería");
+    }
+
+    @Test
     void testResponderCorrectamente() {
-        juego.setPreguntaActual(0);
+        juego.nuevaPregunta();
         assertEquals("OK", juego.responder("RESPUESTA DIA"),
                 "Problema con la respuesta correcta");
         assertEquals("OK", juego.responder("RESPUESTA dia"),
@@ -105,7 +108,7 @@ public class TestJuegoParejas {
 
     @Test
     void testResponderIncorrectamente() {
-        juego.setPreguntaActual(0);
+        juego.nuevaPregunta();
         assertEquals("ERROR", juego.responder("RESPUESTA SARTEN"),
                 "Debe dar error con respuesta incorrecta");
         assertEquals("ERROR", juego.responder("RESPUESTA MESA"),
