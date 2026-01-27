@@ -28,14 +28,17 @@ class HandlerParejas implements Runnable {
                     out.println("GRACIAS POR JUGAR");
                     break;
                 } else if (linea.equalsIgnoreCase("NUEVA")) {
-                    if (juego.nuevaPregunta().equalsIgnoreCase("FIN")) {
+                    String nueva = juego.nuevaPregunta();
+
+                    if (nueva.equalsIgnoreCase("FIN")) {
                         out.println("NO HAY MÁS PREGUNTAS. GRACIAS POR JUGAR");
                         break;
                     }
-                    out.println(juego.nuevaPregunta());
+                    out.println(nueva);
+
                 } else if (linea.equalsIgnoreCase("PISTA")) {
                     out.println(juego.pedirPista());
-                } else if (linea.toUpperCase().trim().startsWith("RESPUESTA ")){
+                } else if (linea.toUpperCase().trim().startsWith("RESPUESTA ")) {
                     out.println(juego.responder(linea));
                 } else {
                     out.println("COMANDO NO RECONOCIDO");
